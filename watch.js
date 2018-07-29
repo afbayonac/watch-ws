@@ -14,13 +14,16 @@ const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
 
 wss.on('connection', ws => {
+  console.log('*** Is connected ***')
   // connection is up, let's add a simple simple event
   ws.on('message', event => {
-    // console.log(event.data)
+    // console.log(event)
+    console.log('-------------------------------------------------------------')
     try {
       console.log(new Date(), JSON.parse(event))
     } catch (e) {
-      console.log(new Date(), 'This not is a json', event)
+      // console.log(new Date(), 'This  is not  a json ')
+      console.log(event)
     }
 
     // log the received message and send it back to the client
@@ -36,10 +39,12 @@ const PORT = 3000
 
 // start our server
 server.listen(process.env.PORT || PORT, () => {
+  console.log('   LISTENINIG')
+  for (let key in networkInterfaces) {
+    console.log(`   http://${networkInterfaces[key][0].address}:${PORT}`)
+  }
+
   console.log(`
-    LISTENINIG
-    http://${networkInterfaces.lo[0].address}:${PORT}
-    http://${networkInterfaces.wlp3s0[0].address}:${PORT}
                       _________
                       | - . - |
                      <|  ___  |>
