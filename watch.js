@@ -1,8 +1,17 @@
 const express = require('express')
 const http = require('http')
+const morgan = require('morgan')
 const WebSocket = require('ws')
 
+const rubrica = `
+                    _________
+                    | - . - |
+                   <|  ___  |>
+                    \\_______/
+`
+
 const app = express()
+app.use(morgan('dev'))
 const os = require('os')
 
 const networkInterfaces = os.networkInterfaces()
@@ -14,25 +23,14 @@ const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
 
 wss.on('connection', ws => {
-  console.log('*** Is connected ***')
+  console.log('*** Is connected  by ws ***')
   // connection is up, let's add a simple simple event
   ws.on('message', event => {
-    // console.log(event)
-    console.log('-------------------------------------------------------------')
-    try {
-      console.log(new Date(), JSON.parse(event))
-    } catch (e) {
-      // console.log(new Date(), 'This  is not  a json ')
-      console.log(event)
-    }
-
-    // log the received message and send it back to the client
-    // console.log('received: %s', message)
-    // ws.send(`Hello, you sent -> ${message}`)
+    console.log(`------------------- WebSockets ------------------:${new Date()}`)
+    try { console.log(JSON.parse(event)) } catch (e) { console.log(event) }
   })
-
   // send immediatly a feedback to the incoming connection
-  ws.send('Hi there, I am a WebSocket server')
+  ws.send(`I'm server test  | - . - |`)
 })
 
 const PORT = 3000
@@ -41,13 +39,10 @@ const PORT = 3000
 server.listen(process.env.PORT || PORT, () => {
   console.log('   LISTENINIG')
   for (let key in networkInterfaces) {
-    console.log(`   http://${networkInterfaces[key][0].address}:${PORT}`)
+    console.log()
+    console.log(`     http://${networkInterfaces[key][0].address}:${PORT}`)
+    console.log(`     ws://${networkInterfaces[key][0].address}:${PORT}`)
   }
 
-  console.log(`
-                      _________
-                      | - . - |
-                     <|  ___  |>
-                      \\_______/
-  `)
+  console.log(rubrica)
 })
