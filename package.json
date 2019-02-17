@@ -5,12 +5,13 @@
   "main": "watch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon watch"
+    "start": "nodemon ./watch.js "
   },
   "author": "afbayonac",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "minimist": "^1.2.0",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.3",
     "ws": "^6.0.0"

@@ -2,6 +2,7 @@ const express = require('express')
 const http = require('http')
 const morgan = require('morgan')
 const WebSocket = require('ws')
+const argv = require('minimist')(process.argv.slice(2))
 
 const rubrica = `
                     _________
@@ -33,7 +34,7 @@ wss.on('connection', ws => {
   ws.send(`I'm server test  | - . - |`)
 })
 
-const PORT = 3000
+const PORT = argv.p || 3000
 
 // start our server
 server.listen(process.env.PORT || PORT, () => {
